@@ -1,106 +1,104 @@
-# A02:2021 – Cryptographic Failures
+# A02:2021 – Kegagalan Kriptografi
 
-## Factors
+## Faktor
 
-| CWEs Mapped | Max Incidence Rate | Avg Incidence Rate | Max Coverage | Avg Coverage | Avg Weighted Exploit | Avg Weighted Impact | Total Occurrences | Total CVEs |
+| Klasifikasi CWE | Tingkat Kejadian Maksimum | Rata - Rata Tingkat kejadian | Cakupan Maksimum | Rata - Rata Cakupan | Rata-rata Bobot Eksploitasi | Rata - Rata Bobot Dampak | Total Kejadian | Total CVE |
 |:-------------:|:--------------------:|:--------------------:|:--------------:|:--------------:|:----------------------:|:---------------------:|:-------------------:|:------------:|
 | 29          | 46.44%             | 4.49%              | 79.33%       | 34.85%       | 7.29                 | 6.81                | 233,788           | 3,075      |
 
-## Overview
+## Ikhtisar
 
-Shifting up one position to #2, previously known as *Sensitive Data
-Exposure*, which is more of a broad symptom rather than a root cause,
-the focus is on failures related to cryptography (or lack thereof).
-Which often lead to exposure of sensitive data. Notable CWEs included
-are *CWE-259: Use of Hard-coded Password*, *CWE-327: Broken or Risky
-Crypto Algorithm*, and *CWE-331 Insufficient Entropy* .
+Bergeser satu posisi ke #2, sebelumnya dikenal sebagai *Sensitif Data
+Exposure*, yang lebih merupakan gejala yang luas daripada akar penyebab,
+fokusnya adalah kegagalan yang terkait dengan kriptografi (atau ketiadaannya),
+yang sering menyebabkan paparan data sensitif. CWE terkenal yang disertakan
+adalah *CWE-259: Use of Hard-coded Password*, *CWE-327: Broken or Risky
+Crypto Algorithm*, dan *CWE-331 Insufficient Entropy* .
 
-## Description 
+## Deskripsi
 
-The first thing is to determine the protection needs of data in transit
-and at rest. For example, passwords, credit card numbers, health
-records, personal information, and business secrets require extra
-protection, mainly if that data falls under privacy laws, e.g., EU's
-General Data Protection Regulation (GDPR), or regulations, e.g.,
-financial data protection such as PCI Data Security Standard (PCI DSS).
-For all such data:
+Hal pertama adalah menentukan kebutuhan perlindungan data dalam perjalanan
+dan pada saat istirahat. Misalnya, kata sandi, nomor kartu kredit, catatan kesehatan, informasi pribadi, dan rahasia bisnis yang memerlukan ekstra
+perlindungan, terutama jika data tersebut termasuk dalam undang-undang privasi, misalnya, EU's General Data Protection Regulation (GDPR), atau peraturan, misalnya,
+perlindungan data keuangan seperti PCI Data Security Standard (PCI DSS).
+Untuk semua data tersebut:
 
--   Is any data transmitted in clear text? This concerns protocols such
-    as HTTP, SMTP, and FTP. External internet traffic is hazardous.
-    Verify all internal traffic, e.g., between load balancers, web
-    servers, or back-end systems.
+-   Apakah ada data yang dikirimkan dalam bentuk teks yang jelas? 
+    ini menyangkut protokol seperti 
+    HTTP, SMTP, and FTP. Lalu lintas internet luar yang berbahaya.
+    Verifikasi semua lalu lintas yang ada di internal, misalnya antara penyeimbang beban,web server, atau sistem back-end.
 
--   Are any old or weak cryptographic algorithms used either by default
-    or in older code?
+-   Apakah ada algoritma kriptografi lama atau lemah yang digunakan baik secara default
+    atau dalam kode yang lebih lama?
 
--   Are default crypto keys in use, weak crypto keys generated or
-    re-used, or is proper key management or rotation missing?
+-   Apakah kunci kripto bawaan sedang digunakan, 
+    kunci kripto yang lemah dihasilkan atau digunakan kembali, 
+    atau apakah manajemen atau rotasi kunci yang tepat hilang?
 
--   Is encryption not enforced, e.g., are any user agent (browser)
-    security directives or headers missing?
+-   Apakah enkripsi tidak diterapkan, misalnya, apakah ada agen pengguna (browser) 
+    yang arahan atau header keamanan hilang?
 
--   Does the user agent (e.g., app, mail client) not verify if the
-    received server certificate is valid?
+-   Apakah agen pengguna (misalnya, aplikasi, klien email) tidak memverifikasi jika
+    sertifikat yang diterima server valid?
 
-See ASVS Crypto (V7), Data Protection (V9), and SSL/TLS (V10)
+Lihat ASVS Crypto (V7), Data Protection (V9), dan SSL/TLS (V10)
 
-## How to Prevent
+## Cara Mengatasi
 
-Do the following, at a minimum, and consult the references:
+Lakukan minimal hal berikut, dan lihat referensi: 
 
--   Classify data processed, stored, or transmitted by an application.
-    Identify which data is sensitive according to privacy laws,
-    regulatory requirements, or business needs.
+-   Mengklasifikasikan data yang diproses, disimpan, atau dikirim oleh aplikasi .
+    Identifikasi data mana yang sensitif menurut undang-undang privasi,
+    persyaratan peraturan, atau kebutuhan bisnis.
 
--   Apply controls as per the classification.
+-   Tetapkan kontrol sesuai klasifikasi.
 
--   Don't store sensitive data unnecessarily. Discard it as soon as
-    possible or use PCI DSS compliant tokenization or even truncation.
-    Data that is not retained cannot be stolen.
+-   Jangan menyimpan data sensitif yang tidak perlu. Buang sesegera
+    mungkin atau gunakan tokenisasi yang sesuai dengan PCI DSS atau bahkan pemotongan.
+    Data yang tidak disimpan tidak dapat dicuri.
 
--   Make sure to encrypt all sensitive data at rest.
+-   Pastikan untuk mengenkripsi semua data sensitif saat istirahat.
 
--   Ensure up-to-date and strong standard algorithms, protocols, and
-    keys are in place; use proper key management.
+-   Pastikan gunakan standar algoritma, protokol yang mutakhir dan kuat, serta 
+    kunci berada pada tempatnya; menggunakan manajemen kunci yang tepat.
 
--   Encrypt all data in transit with secure protocols such as TLS with
-    perfect forward secrecy (PFS) ciphers, cipher prioritization by the
-    server, and secure parameters. Enforce encryption using directives
-    like HTTP Strict Transport Security (HSTS).
+-   Enkripsi semua data dalam perjalanan dengan protokol aman seperti TLS dengan
+    cipher perfect forward secrecy (PFS), prioritas cipher oleh
+    server, dan parameter yang aman. Terapkan enkripsi menggunakan arahan
+    seperti HTTP Strict Transport Security (HSTS).
 
--   Disable caching for response that contain sensitive data.
+-   Menonaktifkan caching untuk respons yang berisi data sensitif.
 
--   Store passwords using strong adaptive and salted hashing functions
-    with a work factor (delay factor), such as Argon2, scrypt, bcrypt or
+-   Simpan kata sandi menggunakan fungsi hashing adaptif dan salted yang kuat
+    dengan faktor kerja (faktor penundaan), seperti Argon2, scrypt, bcrypt atau
     PBKDF2.
 
--   Verify independently the effectiveness of configuration and
-    settings.
+-   Verifikasi secara independen efektivitas konfigurasi dan
+    pengaturan.
 
-## Example Attack Scenarios
+## Contoh Scenario Serangan
 
-**Scenario #1**: An application encrypts credit card numbers in a
-database using automatic database encryption. However, this data is
-automatically decrypted when retrieved, allowing a SQL injection flaw to
-retrieve credit card numbers in clear text.
+**Skenario #1**: Aplikasi mengenkripsi nomor kartu kredit dalam
+database menggunakan enkripsi database otomatis. Namun, data ini
+secara otomatis didekripsi ketika diambil, memungkinkan cacat injeksi SQL untuk
+mengambil nomor kartu kredit dalam teks yang jelas.
 
-**Scenario #2**: A site doesn't use or enforce TLS for all pages or
-supports weak encryption. An attacker monitors network traffic (e.g., at
-an insecure wireless network), downgrades connections from HTTPS to
-HTTP, intercepts requests, and steals the user's session cookie. The
-attacker then replays this cookie and hijacks the user's (authenticated)
-session, accessing or modifying the user's private data. Instead of the
-above they could alter all transported data, e.g., the recipient of a
-money transfer.
+**Skenario #2**: Situs tidak menggunakan atau menerapkan TLS untuk semua halaman atau
+mendukung enkripsi yang lemah. Penyerang memantau lalu lintas jaringan (misalnya, di
+jaringan nirkabel yang tidak aman), menurunkan versi koneksi dari HTTPS ke
+HTTP, memotong permintaan, dan mencuri cookie sesi pengguna.
+Penyerang Kemudian replay cookie ini dan membajak pengguna sesi (dikonfirmasi), mengakses atau memodifikasi data pribadi pengguna. Alih-alih diatas, 
+mereka dapat mengubah semua data yang diangkut, misalnya, penerima
+mentransfer uang.
 
-**Scenario #3**: The password database uses unsalted or simple hashes to
-store everyone's passwords. A file upload flaw allows an attacker to
-retrieve the password database. All the unsalted hashes can be exposed
-with a rainbow table of pre-calculated hashes. Hashes generated by
-simple or fast hash functions may be cracked by GPUs, even if they were
-salted.
+**Skenario #3**: Kata sandi pada database  menggunakan hash tanpa garam atau sederhana untuk
+menyimpan kata sandi semua orang. Cacat unggah file memungkinkan penyerang untuk
+mengambil basis data kata sandi. Semua unsalted hashes dapat diekspos
+dengan tabel pelangi dari hash yang telah dihitung sebelumnya. Hash yang dihasilkan oleh
+fungsi hash sederhana atau cepat dapat dipecahkan oleh GPU, meskipun telah
+diasinkan.
 
-## References
+## Referensi
 
 -   [OWASP Proactive Controls: Protect Data
     Everywhere](https://owasp.org/www-project-proactive-controls/v3/en/c8-protect-data-everywhere)
@@ -122,7 +120,7 @@ salted.
 -   OWASP Testing Guide: Testing for weak cryptography
 
 
-## List of Mapped CWEs
+## Daftar Klasifikasi CWE
 
 CWE-261 Weak Encoding for Password
 
