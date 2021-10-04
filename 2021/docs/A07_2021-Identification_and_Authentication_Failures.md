@@ -1,100 +1,88 @@
-# A07:2021 – Identification and Authentication Failures
+# A07:2021 – Kegagalan Identifikasi dan Otentikasi
 
-## Factors
+## Faktor
 
-| CWEs Mapped | Max Incidence Rate | Avg Incidence Rate | Max Coverage | Avg Coverage | Avg Weighted Exploit | Avg Weighted Impact | Total Occurrences | Total CVEs |
+| Klasifikasi CWE | Tingkat Kejadian Maksimum | Rata - Rata Tingkat kejadian | Cakupan Maksimum | Rata - Rata Cakupan | Rata-rata Bobot Eksploitasi | Rata - Rata Bobot Dampak | Total Kejadian | Total CVE |
 |:-------------:|:--------------------:|:--------------------:|:--------------:|:--------------:|:----------------------:|:---------------------:|:-------------------:|:------------:|
 | 22          | 14.84%             | 2.55%              | 79.51%       | 45.72%       | 7.40                 | 6.50                | 132,195           | 3,897      |
 
-## Overview
+## Ikhtisar
 
-Previously known as *Broken Authentication*, this category slid down
-from the second position and now includes CWEs related to identification
-failures. Notable CWEs included are *CWE-297: Improper Validation of
-Certificate with Host Mismatch*, *CWE-287: Improper Authentication*, and
+Sebelumnya dikenal sebagai *Broken Authentication*, kategori ini turun
+dari posisi kedua dan sekarang mencakup CWE yang terkait dengan kegagalan identifikasi. CWE terkenal yang disertakan adalah *CWE-297: Improper Validation of
+Certificate with Host Mismatch*, *CWE-287: Improper Authentication*, dan
 *CWE-384: Session Fixation*.
 
-## Description 
+## Deskripsi 
 
-Confirmation of the user's identity, authentication, and session
-management is critical to protect against authentication-related
-attacks. There may be authentication weaknesses if the application:
+Konfirmasi identitas pengguna, otentikasi, dan sesi manajemen sangat penting untuk melindungi dari serangan terkait otentikasi. 
+Mungkin ada kelemahan otentikasi jika aplikasi:
 
--   Permits automated attacks such as credential stuffing, where the
-    attacker has a list of valid usernames and passwords.
+-   Mengizinkan serangan otomatis seperti isian kredensial, di mana
+    penyerang memiliki daftar nama pengguna dan kata sandi yang valid.
 
--   Permits brute force or other automated attacks.
+-   Mengizinkan brute force atau serangan otomatis lainnya.
 
--   Permits default, weak, or well-known passwords, such as "Password1"
-    or "admin/admin. "
+-   Mengizinkan kata sandi bawaan, lemah, atau kata sandi yang terkenal, seperti "Password1" atau "admin/admin."
 
--   Uses weak or ineffective credential recovery and forgot-password
-    processes, such as "knowledge-based answers," which cannot be made
-    safe.
+-   Menggunakan pemulihan kredensial yang lemah atau tidak efektif dan proses lupa kata sandi, seperti "jawaban berbasis pengetahuan", yang tidak dapat dibuat
+    aman.
 
--   Uses plain text, encrypted, or weakly hashed passwords (see
+-   Menggunakan kata sandi teks biasa, terenkripsi, atau dengan hash yang lemah (lihat
     A3:2017-Sensitive Data Exposure).
 
--   Has missing or ineffective multi-factor authentication.
+-   Memiliki otentikasi multi-faktor yang hilang atau tidak efektif.
 
--   Exposes Session IDs in the URL (e.g., URL rewriting).
+-   Mengekspos ID Sesi di URL (misalnya, penulisan ulang URL).
 
--   Do not rotate Session IDs after successful login.
+-   Jangan memutar ID Sesi setelah login berhasil.
 
--   Does not correctly invalidate Session IDs. User sessions or
-    authentication tokens (mainly single sign-on (SSO) tokens) aren't
-    properly invalidated during logout or a period of inactivity.
+-   Tidak membatalkan ID Sesi dengan benar. Sesi pengguna atau
+    token autentikasi (terutama token single sign-on (SSO)) tidak
+    divalidasi dengan benar selama logout atau periode tidak aktif.
 
-## How to Prevent
+## Cara Mencegah
 
--   Where possible, implement multi-factor authentication to prevent
-    automated credential stuffing, brute force, and stolen credential
-    reuse attacks.
+-   Jika memungkinkan, terapkan otentikasi multi-faktor untuk mencegah
+    pengisian kredensial otomatis, brute force, dan dan serangan penggunaan kembali kredensial yang dicuri.
 
--   Do not ship or deploy with any default credentials, particularly for
-    admin users.
+-   Jangan mengirim atau menyebarkan dengan kredensial bawaan apa pun, terutama untuk
+    pengguna admin.
 
--   Implement weak password checks, such as testing new or changed
-    passwords against the top 10,000 worst passwords list.
+-   Menerapkan pemeriksaan kata sandi yang lemah, seperti menguji kata sandi baru atau yang diubah terhadap 10.000 daftar kata sandi terburuk
 
--   Align password length, complexity, and rotation policies with NIST
-    800-63b's guidelines in section 5.1.1 for Memorized Secrets or other
-    modern, evidence-based password policies.
+-   Sejajarkan panjang sandi, kompleksitas, dan kebijakan rotasi dengan pedoman NIST
+    800-63b di bagian 5.1.1 untuk Rahasia yang Dihafal atau kebijakan kata sandi modern berbasis bukti lainnya.
 
--   Ensure registration, credential recovery, and API pathways are
-    hardened against account enumeration attacks by using the same
-    messages for all outcomes.
+-   Pastikan pendaftaran, pemulihan kredensial, dan jalur API
+    diperkuat terhadap serangan enumerasi akun dengan menggunakan pesan yang sama
+    untuk semua hasil.
 
--   Limit or increasingly delay failed login attempts. Log all failures
-    and alert administrators when credential stuffing, brute force, or
-    other attacks are detected.
+-   Batasi atau semakin tunda upaya login yang gagal. Catat semua kegagalan
+    dan peringatkan administrator ketika pengisian kredensial, brute force, atau
+    serangan lainnya terdeteksi.
 
--   Use a server-side, secure, built-in session manager that generates a
-    new random session ID with high entropy after login. Session IDs
-    should not be in the URL, be securely stored, and invalidated after
-    logout, idle, and absolute timeouts.
+-   Gunakan pengelola sesi built-in sisi server, aman, yang menghasilkan
+    ID sesi acak baru dengan entropi tinggi setelah login. ID sesi
+    tidak boleh ada di URL, disimpan dengan aman, dan tidak valid setelah
+    keluar, idle, dan waktu tunggu absolut.
 
-## Example Attack Scenarios
+## Contoh Skenario Serangan
 
-**Scenario #1:** Credential stuffing, the use of lists of known
-passwords, is a common attack. Suppose an application does not implement
-automated threat or credential stuffing protection. In that case, the
-application can be used as a password oracle to determine if the
-credentials are valid.
+**Skenario #1:** Pengisian Kredensial, penggunaan daftar kata sandi yang diketahui
+adalah serangan yang umum. Misalkan aplikasi tidak menerapkan
+perlindungan terhadap ancaman atau pengisian kredensial otomatis. Dalam hal ini,
+aplikasi dapat digunakan sebagai kata sandi oracle untuk menentukan apakah
+kredensial itu valid.
 
-**Scenario #2:** Most authentication attacks occur due to the continued
-use of passwords as a sole factor. Once considered, best practices,
-password rotation, and complexity requirements encourage users to use
-and reuse weak passwords. Organizations are recommended to stop these
-practices per NIST 800-63 and use multi-factor authentication.
+**Skenario #2:** Sebagian besar serangan autentikasi terjadi karena terus
+menggunakan sandi sebagai satu-satunya faktor. Setelah dipertimbangkan, praktik terbaik, rotasi kata sandi, dan persyaratan kompleksitas mendorong pengguna untuk menggunakan kembali kata sandi yang lemah. Organisasi disarankan untuk menghentikan praktik ini per NIST 800-63 dan menggunakan otentikasi multi-faktor.
 
-**Scenario #3:** Application session timeouts aren't set correctly. A
-user uses a public computer to access an application. Instead of
-selecting "logout," the user simply closes the browser tab and walks
-away. An attacker uses the same browser an hour later, and the user is
-still authenticated.
+**Skenario #3:** Waktu tunggu sesi aplikasi tidak disetel dengan benar. Seorang
+pengguna menggunakan komputer publik untuk mengakses aplikasi. Alih-alih
+memilih "logout", pengguna cukup menutup tab browser dan pergi. Penyerang menggunakan browser yang sama satu jam kemudian, dan pengguna masih diautentikasi.
 
-## References
+## Referensi
 
 -   [OWASP Proactive Controls: Implement Digital
     Identity](https://owasp.org/www-project-proactive-controls/v3/en/c6-digital-identity)
@@ -122,7 +110,7 @@ still authenticated.
 
 -   NIST 800-63b: 5.1.1 Memorized Secrets
 
-## List of Mapped CWEs
+## Daftar Klasifikasi CWE
 
 CWE-255 Credentials Management Errors
 
