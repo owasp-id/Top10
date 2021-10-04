@@ -1,100 +1,86 @@
-# A06:2021 – Vulnerable and Outdated Components
+# A06:2021 – Komponen yang Rentan dan Kadaluwarsa
 
-## Factors
+## Faktor
 
-| CWEs Mapped | Max Incidence Rate | Avg Incidence Rate | Max Coverage | Avg Coverage | Avg Weighted Exploit | Avg Weighted Impact | Total Occurrences | Total CVEs |
+| Klasifikasi CWE | Tingkat Kejadian Maksimum | Rata - Rata Tingkat kejadian | Cakupan Maksimum | Rata - Rata Cakupan | Rata-rata Bobot Eksploitasi | Rata - Rata Bobot Dampak | Total Kejadian | Total CVE |
 |:-------------:|:--------------------:|:--------------------:|:--------------:|:--------------:|:----------------------:|:---------------------:|:-------------------:|:------------:|
 | 3           | 27.96%             | 8.77%              | 51.78%       | 22.47%       | 5.00                 | 5.00                | 30,457            | 0          |
 
-## Overview
+## Ikhtisar
 
-It was #2 from the industry survey but also had enough data to make the
-Top 10 via data. Vulnerable Components are a known issue that we
-struggle to test and assess risk and is the only category to not have
-any CVEs mapped to the included CWEs, so a default exploits/impact
-weight of 5.0 is used. Notable CWEs included are *CWE-1104: Use of
-Unmaintained Third-Party Components* and the two CWEs from Top 10 2013
-and 2017.
+Sebelumnya #2 dari survei industri tetapi juga memiliki data yang cukup untuk membuat
+Top 10 melalui data. Komponen yang rentan adalah masalah umum yang kami
+perjuangkan untuk menguji dan menilai risiko dan merupakan satu-satunya kategori yang tidak memiliki CVE yang dipetakan ke CWE yang disertakan, jadi bawaan eksploitasi/dampak 5.0 yang digunakan. CWE terkenal yang disertakan adalah *CWE-1104: Penggunaan
+Komponen Pihak Ketiga yang Tidak Dikelola* dan dua CWE dari Top 10 2013
+dan 2017.
 
-## Description 
+## Deskripsi 
 
-You are likely vulnerable:
+Anda kemungkinan besar rentan:
 
--   If you do not know the versions of all components you use (both
-    client-side and server-side). This includes components you directly
-    use as well as nested dependencies.
+-   Jika Anda tidak mengetahui versi semua komponen yang Anda gunakan ( sisi
+    klien dan sisi server). Ini termasuk komponen yang secara langsung
+    anda gunakan serta dependensi bersarang.
 
--   If the software is vulnerable, unsupported, or out of date. This
-    includes the OS, web/application server, database management system
-    (DBMS), applications, APIs and all components, runtime environments,
-    and libraries.
+-   Jika perangkat lunak rentan, tidak didukung, atau ketinggalan zaman. Ini
+    termasuk OS, server web/aplikasi, sistem manajemen basis data
+    (DBMS), aplikasi, API dan semua komponen, lingkungan runtime,
+    dan pustaka.
 
--   If you do not scan for vulnerabilities regularly and subscribe to
-    security bulletins related to the components you use.
+-   Jika Anda tidak memindai kerentanan secara teratur dan berlangganan
+    buletin keamanan yang terkait dengan komponen yang anda gunakan.
 
--   If you do not fix or upgrade the underlying platform, frameworks,
-    and dependencies in a risk-based, timely fashion. This commonly
-    happens in environments when patching is a monthly or quarterly task
-    under change control, leaving organizations open to days or months
-    of unnecessary exposure to fixed vulnerabilities.
+-   Jika Anda tidak memperbaiki atau meningkatkan platform, kerangka kerja,
+    dan dependensi yang mendasarinya secara tepat waktu dan berbasis risiko. 
+    Ini biasanya terjadi di lingkungan ketika sedang menambal tugas bulanan atau triwulanan dibawah kendali perubahan, membiarkan organisasi terbuka selama berhari-hari atau berbulan bulan terpapar kerentanan tetap yang tidak perlu.
 
--   If software developers do not test the compatibility of updated,
-    upgraded, or patched libraries.
+-   Jika pengembang perangkat lunak tidak menguji kompatibilitas yang diperbarui,
+    perpustakaan yang ditingkatkan, atau ditambal.
 
--   If you do not secure the components’ configurations (see
+-   Jika anda tidak mengamankan konfigurasi komponen (lihat
     A05:2021-Security Misconfiguration).
 
-## How to Prevent
+## Cara Mencegah
 
-There should be a patch management process in place to:
+Harus ada proses manajemen patch untuk: 
 
--   Remove unused dependencies, unnecessary features, components, files,
-    and documentation.
+-   Menghapus dependensi, fitur, komponen, file,
+    dan dokumentasi yang tidak digunakan.
 
--   Continuously inventory the versions of both client-side and
-    server-side components (e.g., frameworks, libraries) and their
-    dependencies using tools like versions, OWASP Dependency Check,
-    retire.js, etc. Continuously monitor sources like CVE and NVD for
-    vulnerabilities in the components. Use software composition analysis
-    tools to automate the process. Subscribe to email alerts for
-    security vulnerabilities related to components you use.
+-   Inventarisasi komponen versi klien dan sisi server secara terus menerus
+    (misalnya, kerangka kerja, pustaka) dan dependensinya menggunakan alat seperti versi, Pemeriksaan Dependesi OWASP, retire.js, dll. Memantau secara terus menerus sumber seperti CVE dan NVD untuk memeriksan kerentanan dalam komponen. Gunakan alat untuk mengotomatisasi proses analisis komposisi perangkat lunak.
+    Berlangganan terhadap peringatan email untuk kerentanan keamanan yang terkait dengan komponen yang Anda gunakan.
 
--   Only obtain components from official sources over secure links.
-    Prefer signed packages to reduce the chance of including a modified,
-    malicious component (See A08:2021-Software and Data Integrity
+-   Hanya dapatkan komponen dari sumber resmi melalui tautan yang aman.
+    Pilih paket yang ditandatangani untuk mengurangi kemungkinan menyertakan komponen berbahaya yang dimodifikasi (Lihat A08:2021-Software and Data Integrity
     Failures).
 
--   Monitor for libraries and components that are unmaintained or do not
-    create security patches for older versions. If patching is not
-    possible, consider deploying a virtual patch to monitor, detect, or
-    protect against the discovered issue.
+-   Memantau pustaka dan komponen yang tidak dirawat atau tidak
+    membuat patch keamanan untuk versi yang lebih lama. Jika tambalan tidak
+    memungkinkan, pertimbangkan untuk menggunakan tambalan virtual untuk memantau, mendeteksi, atau melindungi dari masalah yang ditemukan.
 
-Every organization must ensure an ongoing plan for monitoring, triaging,
-and applying updates or configuration changes for the lifetime of the
-application or portfolio.
+Setiap organisasi harus memastikan rencana berkelanjutan untuk memantau, melakukan triase, dan menerapkan pembaruan atau perubahan konfigurasi selama masa pakai
+aplikasi atau portofolio.
 
-## Example Attack Scenarios
+## Contoh Skenario Serangan 
 
-**Scenario #1:** Components typically run with the same privileges as
-the application itself, so flaws in any component can result in serious
-impact. Such flaws can be accidental (e.g., coding error) or intentional
-(e.g., a backdoor in a component). Some example exploitable component
-vulnerabilities discovered are:
+**Skenario #1:** Komponen biasanya berjalan dengan hak istimewa yang sama seperti
+aplikasi itu sendiri, sehingga cacat pada komponen apa pun dapat mengakibatkan dampak yanh serius. Jadi cacat tersebut dapat terjadi secara tidak sengaja (misalnya, kesalahan pengkodean) atau disengaja (misalnya, pintu belakang dalam suatu komponen). Beberapa contoh kerentanan komponen yang dapat dieksploitasi yang ditemukan adalah:
 
--   CVE-2017-5638, a Struts 2 remote code execution vulnerability that
-    enables the execution of arbitrary code on the server, has been
-    blamed for significant breaches.
+-   CVE-2017-5638, kerentanan eksekusi kode jarak jauh Struts 2 yang
+    memungkinkan eksekusi kode arbitrer di server, telah
+    disalahkan atas pelanggaran yang signifikan.
 
--   While the internet of things (IoT) is frequently difficult or
-    impossible to patch, the importance of patching them can be great
-    (e.g., biomedical devices).
+-   Sementara internet of things (IoT) seringkali sangat sulit untuk ditambal, 
+    Penting menambalnya bisa sangat bagus.
+    (Misal, perangkat biomedis).
 
-There are automated tools to help attackers find unpatched or
-misconfigured systems. For example, the Shodan IoT search engine can
-help you find devices that still suffer from Heartbleed vulnerability
-patched in April 2014.
+Ada alat otomatis untuk membantu penyerang menemukan sesuatu yang belum ditambal atau
+sistem yang salah konfigurasi. Misalnya, mesin pencari Shodan IoT dapat
+membantu Anda menemukan perangkat yang masih mengalami kerentanan Heartbleed yang
+ditambal pada April 2014.
 
-## References
+## Referensi
 
 -   OWASP Application Security Verification Standard: V1 Architecture,
     design and threat modelling
@@ -119,7 +105,7 @@ patched in April 2014.
 
 -   https://safecode.org/publication/SAFECode_Software_Integrity_Controls0610.pdf
 
-## List of Mapped CWEs
+## Daftar Klasifikasi CWE
 
 CWE-937 OWASP Top 10 2013: Using Components with Known Vulnerabilities
 
